@@ -14,14 +14,14 @@ def download_data():
         f.write(response.content)
     print(f"File saved to {LOCAL_FILE}")
 
-def upload_to_s3(s3_bucket):
-    print(f"Uploading {LOCAL_FILE} to s3://{s3_bucket}/{S3_KEY}")
+def upload_to_s3(s3_bucket, local_file, s3_key):
+    print(f"Uploading {local_file} to s3://{s3_bucket}/{s3_key}")
     s3 = boto3.client("s3")
-    s3.upload_file(LOCAL_FILE, s3_bucket, S3_KEY)
+    s3.upload_file(local_file, s3_bucket, s3_key)
     print("Upload complete.")
 
 def download_upload_task(s3_bucket=None):
     time.sleep(5)
     download_data()
     time.sleep(5) 
-    upload_to_s3(s3_bucket)
+    upload_to_s3(s3_bucket, LOCAL_FILE, S3_KEY)
